@@ -17,7 +17,7 @@ const pointSchema = new mongoose.Schema({
 
 const imageSchema = new mongoose.Schema({
     data: {
-        type: Buffer,
+        type: String,
         required: true
       },
       contentType: {

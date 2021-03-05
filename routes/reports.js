@@ -19,11 +19,30 @@ var storage = multer.diskStorage({
         cb(null, 'public/uploads')
     },
     filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now())
+        cb(null, Date.now() + '-' + file.originalname);
     }
 });
+
+// Filter and accept images only
+let fileFilter = function (req, file, cb) {
+    var allowedMimes = ['image/jpeg', 'image/pjpeg', 'image/png'];
+    if (allowedMimes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb({
+            success: false,
+            message: 'Invalid file type. Only jpg, png image files are allowed.'
+        }, false);
+    }
+};
  
-var upload = multer({ storage: storage });
+var upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 200 * 1024 * 1024
+    },
+    fileFilter: fileFilter
+});
 
 // Auth Check
 router.use(protect);

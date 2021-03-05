@@ -44,11 +44,14 @@ exports.getReportById = async (req, res, next) => {
 
 exports.addReport = async (req, res, next) => {
     const { location, state, district, type, description } = req.body;
-    const {filename} = req.file;
+    const { filename, mimetype } = req.file;
 
     console.log(location)
 
     try {
+      console.log(req.file.path);
+      console.log(req.get('host'));
+      console.log(req.protocol);
         const report = await Report.create({
             location : JSON.parse(location),
             state,
@@ -56,8 +59,8 @@ exports.addReport = async (req, res, next) => {
             type,
             description,
             image: {
-                data: fs.readFileSync(path.join(__dirname, '..', 'public', 'uploads', filename)),
-                contentType: 'image/png'
+                data: req.protocol + '://' + req.get('host') + "/uploads/" + filename,
+                contentType: mimetype
             },
             user : req.user._id});
         res.status(201).json({
@@ -72,7 +75,7 @@ exports.addReport = async (req, res, next) => {
 exports.deleteReportById = async (req, res, next) => {
     const { id } = req.params;
     try{
-        const report = Report.findByIdAndDelete(id);
+        const report = await Report.findByIdAndDelete(id);
         res.status(200).json({
             success: true,
             report: report,

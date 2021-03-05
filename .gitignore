@@ -1,12 +1,8 @@
-# Logs
-npm-debug.log*
+# Node build artifacts
+node_modules
+npm-debug.log
 
-# Dependency directories
-node_modules/
-/node_modules
-
-# production
-/build
-
-# dotenv environment variables file
-.env
+# Local development
+*.env
+*.dev
+.DS_Store

@@ -1,6 +1,6 @@
 const ErrorResponse = require("../utils/errorResponse");
 const User = require("../models/User");
-const sendSMS = require("../utils/sendSMS");
+const {sendSMS} = require("../utils/sendSMS");
 
 // @desc    Verify Password
 exports.verifyPassword = async (req, res, next) => {
@@ -48,12 +48,12 @@ exports.generatePassword = async (req, res, next) => {
     }
 
     // Generate OTP and add it to db
-    const resetToken = user.getOneTimePasswordToken();
+    const OTPString = user.getOneTimePasswordToken();
 
     await user.save();
 
     try {
-      // TODO : Send sms
+      sendSMS(phone, OTPString);
 
       res.status(200).json({ success: true, data: "SMS Sent" });
     } catch (err) {
@@ -71,4 +71,3 @@ exports.generatePassword = async (req, res, next) => {
     next(err);
   }
 };
-

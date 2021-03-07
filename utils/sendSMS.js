@@ -6,7 +6,7 @@ async function sendSMS(phone, OTPString) {
     var options = {
         'method': 'POST',
         'hostname': process.env.SMS_HOSTNAME,
-        'path': `${process.env.SMS_PATH}&numbers=${phone}&message=${OTPString}`,
+        'path': `${process.env.SMS_PATH}&numbers=${phone}&message=Your haritham one time password is : ${OTPString}`,
         'headers': {
         },
         'maxRedirects': 20

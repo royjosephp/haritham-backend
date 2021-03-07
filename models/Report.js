@@ -53,6 +53,9 @@ const ReportSchema = new mongoose.Schema({
     },
     user: {
         type: mongoose.ObjectId
+    },
+    created_at: {
+        type: Date, default: Date.now
     }
 });
 

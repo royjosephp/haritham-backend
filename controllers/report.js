@@ -60,7 +60,7 @@ exports.addReport = async (req, res, next) => {
             type,
             description,
             image: {
-                data: req.protocol + '://' + req.get('host') + "/uploads/" + filename,
+                data: 'https://' + req.get('host') + "/uploads/" + filename,
                 contentType: mimetype
             },
             user : req.user._id});

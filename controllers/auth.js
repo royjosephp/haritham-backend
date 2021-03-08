@@ -5,14 +5,19 @@ const {sendSMS} = require("../utils/sendSMS");
 // @desc    Verify Password
 exports.verifyPassword = async (req, res, next) => {
 
-  const { password } = req.body;
+  const { phone, password } = req.body;
 
   try {
 
+    // const user = await User.findOne({
+    //   oneTimePassword : password,
+    //   oneTimePasswordExpire: { $gt: Date.now() },
+    // });
+
     const user = await User.findOne({
-      oneTimePassword : password,
-      oneTimePasswordExpire: { $gt: Date.now() },
-    });
+        phone : phone,
+        oneTimePasswordExpire: { $gt: Date.now() },
+      });
 
     if (!user) {
       return next(new ErrorResponse("Invalid Token", 400));

@@ -2,9 +2,6 @@
 node_modules
 npm-debug.log
 
-# assets
-public/uploads/
-
 # Local development
 *.env
 *.dev
